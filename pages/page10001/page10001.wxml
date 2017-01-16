@@ -1,0 +1,54 @@
+<view class="app">
+<template name="zcClassify">
+  <view class="element classify {{ 'classify-mode'+data.customFeature.mode }}" style="{{data.style}}">
+    <scroll-view scroll-x="true" data-color="red" data-index="0" data-event-params="{{data.eventParams}}" catchtap="{{data.eventHandler}}">
+      <block wx:for="{{data.content}}" wx:for-index="idx" wx:for-item="itemName">
+        <block wx:if="{{idx==data.customFeature.selected}}">
+          <block wx:if="{{data.customFeature.mode==1}}">
+            <view class="classify-item selected" data-event-params="{{itemName.eventParams}}" catchtap="{{itemName.eventHandler}}" style="color:{{data.customFeature.selectedColor}}"><text>{{itemName.text}}</text><i class="underline" style="border-color:{{data.customFeature.selectedColor}}"></i></view>
+          </block>
+          <block wx:else>
+            <view class="classify-item selected" data-event-params="{{itemName.eventParams}}" catchtap="{{itemName.eventHandler}}" style="color:{{data.customFeature.selectedColor}}"><text style="background-color:{{data.customFeature.selectedColor}}">{{itemName.text}}</text></view>
+          </block>
+        </block>
+        <block wx:else>
+          <view class="classify-item" data-event-params="{{itemName.eventParams}}" catchtap="{{itemName.eventHandler}}"><text>{{itemName.text}}</text></view>
+        </block>
+      </block>
+    </scroll-view>
+  </view>
+</template>
+<view class="ele-container">
+  <template is="zcClassify" data="{{data:classify1}}"></template>
+</view><template name="zcGoodsList2">
+  <scroll-view class="element goods-list scroll-ele"
+               data-param="{{data.param}}"
+               data-compid="goods_list2"
+               data-type="goods-list"
+               style='{{data.style}}'
+               scroll-y="true"
+               data-curpage="{{data.curpage}}"
+               bindscrolltolower="goodsScrollFunc">
+    <view class="js-list-container" data-list-index="0">
+      <view class="goods-list-item background-ele router js-to-detail {{data.customFeature.mode == 1? 'double-goods-list': ''}}"
+            wx:for="{{data.goods_data}}" data-id="{{item.form_data.id}}" style="{{data.list_style}}" data-contact="{{data.customFeature.ifUseContact}}"
+            catchtap="turnToGoodsDetail"
+            >
+        <view class="inner-content">
+          <image class="list-img" src="{{item.form_data.cover}}" style="{{data.img_style}}" mode="aspectFit"></image>
+          <view class="title-container" style="width: {{data.title_width.width}}">
+            <view class="title">{{item.form_data.title}}</view>
+            <view>
+              <text class="price">￥{{item.form_data.price}}</text>
+              <text class="sales">销量：{{item.form_data.sales}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+<view class="ele-container">
+  <template is="zcGoodsList2" data="{{data:goods_list2}}"></template>
+</view>
+</view>
